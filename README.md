@@ -1,6 +1,7 @@
 该项目在ThinkPHP3.2基础上扩展，用于快速发布webservice服务，在公司内部多个系统中使用一年多，至今未发现问题。
 
 使用步骤：
+
 1、复制以下代码至ThinkPHP目录下的ThinkPHP.php文件中
 
 defined('WSDL_PATH')   or define('WSDL_PATH', 'WSDL');  //WSDL生成文件路径
