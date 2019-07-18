@@ -21,40 +21,40 @@ defined('SERVER_IMPLEMENT_NAME')   or define('SERVER_IMPLEMENT_NAME', 'Implement
 
 5、以上步骤已经可以正常发布webservice了，从 ExampleController中可以看到，文件中包含两个控制器，一个为注册方法，一个为具体实现。第一个控制器可以在浏览器中访问，第二个不可以，如果想要访问具体实现控制器 ExampleImplementController来调试的话，将以下方法替换至 ThinkPHP\Common\functions.php
 
-/**
- * 用于实例化访问控制器
- * @param string $name 控制器名
- * @param string $path 控制器命名空间（路径）
- * @return Think\Controller|false
- */
-function controller($name,$path=''){
-    $layer  =   C('DEFAULT_C_LAYER');
-    if(!C('APP_USE_NAMESPACE')){
-        $class  =   parse_name($name, 1).$layer;
-        import(MODULE_NAME.'/'.$layer.'/'.$class);
-    }else{
-        $class  =   ( $path ? basename(ADDON_PATH).'\\'.$path : MODULE_NAME ).'\\'.$layer;
-        $array  =   explode('/',$name);
-        foreach($array as $name){
-            $class  .=   '\\'.parse_name($name, 1);
+     /**
+     * 用于实例化访问控制器
+     * @param string $name 控制器名
+     * @param string $path 控制器命名空间（路径）
+     * @return Think\Controller|false
+     */
+    function controller($name,$path=''){
+        $layer  =   C('DEFAULT_C_LAYER');
+        if(!C('APP_USE_NAMESPACE')){
+            $class  =   parse_name($name, 1).$layer;
+            import(MODULE_NAME.'/'.$layer.'/'.$class);
+        }else{
+            $class  =   ( $path ? basename(ADDON_PATH).'\\'.$path : MODULE_NAME ).'\\'.$layer;
+            $array  =   explode('/',$name);
+            foreach($array as $name){
+                $class  .=   '\\'.parse_name($name, 1);
+            }
+            $class .=   $layer;
         }
-        $class .=   $layer;
-    }
-    //2018-6-1，对webservice模块下的控制器单独实例化类文件
-    if (SERVER_MODULE == MODULE_NAME) {
-        $split = explode('\\', $class);
-        $split[count($split) - 1] = str_replace(SERVER_IMPLEMENT_NAME, '', $split[count($split) - 1]);
-        $file = APP_PATH.implode('\\', $split). EXT;
-        if(file_exists($file)){
-            require($file);
+        //2018-6-1，对webservice模块下的控制器单独实例化类文件
+        if (SERVER_MODULE == MODULE_NAME) {
+            $split = explode('\\', $class);
+            $split[count($split) - 1] = str_replace(SERVER_IMPLEMENT_NAME, '', $split[count($split) - 1]);
+            $file = APP_PATH.implode('\\', $split). EXT;
+            if(file_exists($file)){
+                require($file);
+            }
+        }
+        if(class_exists($class)) {
+            return new $class();
+        }else {
+            return false;
         }
     }
-    if(class_exists($class)) {
-        return new $class();
-    }else {
-        return false;
-    }
-}
 
 6、部署到其他框架中也比较简单，需要修改的就是 WebServiceController.class.php 这个控制器基类，里面有一些TP3专用的方法和常量
 
