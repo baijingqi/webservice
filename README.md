@@ -2,11 +2,16 @@
 
 使用步骤：
 1、复制以下代码至ThinkPHP目录下的ThinkPHP.php文件中
+
 defined('WSDL_PATH')   or define('WSDL_PATH', 'WSDL');  //WSDL生成文件路径
+
 defined('SERVER_MODULE')   or define('SERVER_MODULE', 'Server'); //webservice发布模块
+
 defined('SERVER_IMPLEMENT_NAME')   or define('SERVER_IMPLEMENT_NAME', 'Implement'); //webservice实现控制器名称后缀
 
+
 2、复制该项目的 WebService 目录至 项目的Vendor目录下
+
 
 3、复制该项目的WebServiceController.class.php至 ThinkPHP/Library/Think/Controller 目录下
 
