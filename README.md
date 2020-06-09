@@ -56,5 +56,5 @@ defined('SERVER_IMPLEMENT_NAME')   or define('SERVER_IMPLEMENT_NAME', 'Implement
         }
     }
 
-6、部署到其他框架中也比较简单，需要修改的就是 WebServiceController.class.php 这个控制器基类，里面有一些TP3专用的方法和常量。
+6、部署到其他框架中也比较简单，需要修改的就是 WebServiceController.class.php 这个控制器基类，里面有一些TP3专用的方法和常量。。。
 
